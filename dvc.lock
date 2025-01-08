@@ -16,3 +16,55 @@ stages:
       hash: md5
       md5: 4918716e52fc57babdcd400dfb3c3f29
       size: 4508527
+  data_preparation:
+    cmd: python src/data/data_preparation.py
+    deps:
+    - path: data/cleaned/swiggy_cleaned.csv
+      hash: md5
+      md5: 4918716e52fc57babdcd400dfb3c3f29
+      size: 4508527
+    - path: src/data/data_preparation.py
+      hash: md5
+      md5: 3e2a96e903923880992e6268edefca49
+      size: 3007
+    params:
+      params.yaml:
+        Data_Preparation.random_state: 42
+        Data_Preparation.test_size: 0.2
+    outs:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: 20172ab330931a534fcb3fb75bf1b77a
+      size: 901132
+    - path: data/interim/train.csv
+      hash: md5
+      md5: 08e8f74451482dfdf2f472e94acb5993
+      size: 3604437
+  data_preprocessing:
+    cmd: python src/features/data_preprocessing.py
+    deps:
+    - path: data/interim/test.csv
+      hash: md5
+      md5: 20172ab330931a534fcb3fb75bf1b77a
+      size: 901132
+    - path: data/interim/train.csv
+      hash: md5
+      md5: 08e8f74451482dfdf2f472e94acb5993
+      size: 3604437
+    - path: src/features/data_preprocessing.py
+      hash: md5
+      md5: 0bc27bf370a98fa5dd2a4057f3a48f4a
+      size: 6949
+    outs:
+    - path: data/processed/test_trans.csv
+      hash: md5
+      md5: 2519c7291782edca74e688cc944df5b9
+      size: 1089313
+    - path: data/processed/train_trans.csv
+      hash: md5
+      md5: 0d2f47751596e1c0f6bffbf7bb582a07
+      size: 4329420
+    - path: models/preprocessor.joblib
+      hash: md5
+      md5: 3610f66b45a990b637a0732f3da1568e
+      size: 8189
